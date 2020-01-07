@@ -38,8 +38,7 @@ ROUTES_SCHEMA = vol.All(cv.ensure_list, [ROUTE_SCHEMA])
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
-        vol.Required(CONF_EMAIL): cv.string,
-        vol.Required(CONF_PASSWORD): cv.string,
+        vol.Required(CONF_APIKEY): cv.string,
         vol.Optional(CONF_ROUTES): ROUTES_SCHEMA,
     }
 )
@@ -48,7 +47,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the departure sensor."""
 
-    nsapi = ns_api.NSAPI(config.get(CONF_EMAIL), config.get(CONF_PASSWORD))
+    nsapi = ns_api.NSAPI(config.get(CONF_APIKEY))
     try:
         stations = nsapi.get_stations()
     except (
